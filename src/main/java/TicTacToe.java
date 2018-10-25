@@ -1,16 +1,21 @@
 package main.java;
 
+import main.java.player.ArtificialIntelligentPlayer;
+import main.java.player.ManualPlayer;
+import main.java.player.Player;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class TicTacToe {
 
+  List<Player> playerList;
   char[][] board;
-  char[] playerSymbols;
-  boolean[] AIplayer = {true, true, false};
 
   public TicTacToe(String fileName) {
 
@@ -23,10 +28,10 @@ public class TicTacToe {
         throw new IOException("Dimension of the board should be between 3 and 10.");
       }
       board = new char[sizeOfTheBoard][sizeOfTheBoard];
-      playerSymbols = new char[3];
-      playerSymbols[0] = line[1].toString().charAt(0);
-      playerSymbols[1] = line[2].toString().charAt(0);
-      playerSymbols[2] = line[3].toString().charAt(0);
+      playerList = new ArrayList<>();
+      playerList.add(new ArtificialIntelligentPlayer(line[1].toString().charAt(0)));
+      playerList.add(new ArtificialIntelligentPlayer(line[2].toString().charAt(0)));
+      playerList.add(new ManualPlayer(line[3].toString().charAt(0)));
       //todo validate all symbols are different
 
     } catch (IOException e) {
@@ -39,17 +44,19 @@ public class TicTacToe {
     displayBoard();
 
     Scanner sc = new Scanner(System.in);
-    int playerTime = generateRandomNumberBetweenRange(0, playerSymbols.length - 1);
+    int playerTime = generateRandomNumberBetweenRange(0, playerList.size() - 1);
     System.out.println("Random:" + playerTime);
-    int totalMovesInGame = board.length * board.length;
-    int countMovesInGame = 0;
+    int totalRoundsInGame = board.length * board.length;
+    int countRoundsInGame = 0;
     int xRound;
     int yRound;
+    Player currentPlayer;
     do {
       playerTime = (playerTime + 1) % 3;
+      currentPlayer = playerList.get(playerTime);
 
       do {
-        if (AIplayer[playerTime]) {
+        if (currentPlayer instanceof ArtificialIntelligentPlayer) {
           System.out.println("Time of the AI player " + playerTime);
           xRound = generateRandomNumberBetweenRange(0, board.length - 1);
           yRound = generateRandomNumberBetweenRange(0, board.length - 1);
@@ -62,10 +69,10 @@ public class TicTacToe {
       }
       while (isOutOfBoard(xRound) || isOutOfBoard(yRound) || board[xRound][yRound] != '\u0000');//todo validate it is a valid move(no one chose it before and it is within board)
 
-      board[xRound][yRound] = playerSymbols[playerTime];
+      board[xRound][yRound] = currentPlayer.getSymbol();
       displayBoard();
-      countMovesInGame++;
-    } while (!isVictory(xRound, yRound, playerSymbols[playerTime]) && !isDraw(totalMovesInGame, countMovesInGame));
+      countRoundsInGame++;
+    } while (!isVictory(xRound, yRound, currentPlayer.getSymbol()) && !isDraw(totalRoundsInGame, countRoundsInGame));
     System.out.println("Ended Game.");
   }
 
