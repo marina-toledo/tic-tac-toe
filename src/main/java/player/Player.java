@@ -1,5 +1,7 @@
 package main.java.player;
 
+import main.java.Board;
+
 public abstract class Player {
 
   protected char symbol;
@@ -12,5 +14,5 @@ public abstract class Player {
     return symbol;
   }
 
-  abstract void makeMove(int x, int y);
+  public abstract Board.Position makeMove(Board board);
 }
