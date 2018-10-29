@@ -13,13 +13,13 @@ public class ManualPlayer extends Player {
   }
 
   @Override
-  public Board.Position makeMove(Board board) {
+  public Board.Position choosePosition(Board board) {
 
     System.out.println("Type the next move with two integers, the first being the row and the second the column. Like : 0 1");
     System.out.println("Time of the manual player " + symbol);
 
     Board.Position position;
-    boolean isValidMove = false;
+    boolean isValidMove;
     do {
       int x = sc.nextInt();
       int y = sc.nextInt();

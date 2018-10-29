@@ -53,7 +53,7 @@ public class TicTacToe {
       playerTime = (playerTime + 1) % 3;
       currentPlayer = playerList.get(playerTime);
 
-      currentPosition = currentPlayer.makeMove(board);
+      currentPosition = currentPlayer.choosePosition(board);
 
       board.matrix[currentPosition.x][currentPosition.y] = currentPlayer.getSymbol();
       board.display();

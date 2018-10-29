@@ -9,7 +9,7 @@ public class Board {
   }
 
   public int getDimension() {
-    return matrix.length * matrix.length;
+    return matrix.length;
   }
 
   public int getTotalSizeOfTheBoard() {

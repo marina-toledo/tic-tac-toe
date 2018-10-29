@@ -9,7 +9,7 @@ public class ArtificialIntelligentPlayer extends Player {
   }
 
   @Override
-  public Board.Position makeMove(Board board) {
+  public Board.Position choosePosition(Board board) {
     System.out.println("Time of the AI player " + symbol);
     Board.Position position;
 

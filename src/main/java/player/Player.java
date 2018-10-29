@@ -14,5 +14,5 @@ public abstract class Player {
     return symbol;
   }
 
-  public abstract Board.Position makeMove(Board board);
+  public abstract Board.Position choosePosition(Board board);
 }
